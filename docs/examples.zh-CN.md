@@ -7,25 +7,25 @@
 ## 📋 目录
 
 1. [药物发现与药物化学](#drug-discovery--medicinal-chemistry)
-2.【癌症基因组学与精准医学】(#cancer-genomics--精准医学)
+2. [癌症基因组学与精准医学](#cancer-genomics--精准医学)
 3. [单细胞转录组学](#single-cell-transcriptomics)
 4. [蛋白质结构与功能](#蛋白质-结构--功能)
 5. [化学安全与毒理学](#chemical-safety--毒理学)
 6. [临床试验分析](#clinical-tri-analysis)
 7. [代谢组学与系统生物学](#metabolomics--systems-biology)
-8.[材料科学与化学](#materials-science--chemistry)
-9.[数字病理学](#digital-pathology)
+8. [材料科学与化学](#materials-science--chemistry)
+9. [数字病理学](#digital-pathology)
 10. [实验室自动化和协议设计](#lab-automation--protocol-design)
-11.[农业基因组学](#agriculture-genomics)
+11. [农业基因组学](#agriculture-genomics)
 12. [神经科学与脑成像](#neuroscience--brain-imaging)
-13.[环境微生物学](#environmental-microbiology)
+13. [环境微生物学](#environmental-microbiology)
 14. [传染病研究](#infectious-disease-research)
 15. [多组学整合](#multi-omics-integration)
-16.[计算化学与合成](#computational-chemistry--synthesis)
+16. [计算化学与合成](#computational-chemistry--synthesis)
 17. [临床研究与现实世界证据](#clinical-research--real-world-evidence)
-18.[实验物理与数据分析](#experimental-physicals--data-analysis)
+18. [实验物理与数据分析](#experimental-physicals--data-analysis)
 19. [化学工程与工艺优化](#chemical-engineering--process-optimization)
-20.[科学插画与视觉传达](#scientific-illustration--视觉-传达)
+20. [科学插画与视觉传达](#scientific-illustration--视觉-传达)
 21. [化学量子计算](#quantum-computing-for-chemistry)
 22. [研究资助写作](#research-grant-writing)
 23. [流式细胞术与免疫表型](#流式细胞术--免疫表型)
@@ -37,6 +37,7 @@
 ### 示例 1：发现新型肺癌 EGFR 抑制剂
 
 **目标**：确定与现有药物相比具有改进特性的新型 EGFR 小分子抑制剂。**使用的技能**：
+
 - `database-lookup` - 查询 ChEMBL、PubChem、COSMIC、AlphaFold DB
 - `paper-lookup` - 搜索 PubMed 文献
 - `rdkit` - 分析分子特性
@@ -129,6 +130,7 @@ Expected Output:
 **目标**：确定 FDA 批准的可重新用于治疗罕见代谢性疾病的药物。
 
 **使用的技能**：
+
 - `database-lookup` - 查询 DrugBank、Open Targets、STRING、KEGG、Reactome、ClinicalTrials.gov、FDA
 - `paper-lookup` - 搜索 OpenAlex、bioRxiv、PubMed
 - `networkx` - 网络分析
@@ -209,6 +211,7 @@ Expected Output:
 **目标**：分析患者的肿瘤测序数据，以确定可行的突变和治疗建议。
 
 **使用的技能**：
+
 - `database-lookup` - 查询 Ensembl、ClinVar、COSMIC、NCBI Gene、UniProt、ClinPGx、DrugBank、ClinicalTrials.gov、开放目标
 - `paper-lookup` - 在 PubMed 中搜索文献证据
 - `pysam` - 解析VCF文件
@@ -306,6 +309,7 @@ Expected Output:
 **目标**：使用 RNA-seq 数据对乳腺癌亚型进行分类，并确定亚型特异性的治疗漏洞。
 
 **使用的技能**：
+
 - `database-lookup` - 查询NCBI基因、反应组、开放目标
 - `paper-lookup` - 搜索 PubMed 进行文献验证
 - `pydeseq2` - 差异表达
@@ -399,6 +403,7 @@ Expected Output:
 ### 示例 5：肿瘤微环境的单细胞图谱
 
 **目标**：表征肿瘤微环境中的免疫细胞群并识别免疫治疗生物标志物。**使用的技能**：
+
 - `database-lookup` - 查询 NCBI 基因的细胞类型标记
 - `scanpy` - 单细胞分析
 - `scvi-tools` - 批量校正和积分
@@ -516,6 +521,7 @@ Expected Output:
 **目标**：设计小分子来破坏治疗相关的蛋白质-蛋白质相互作用。
 
 **使用的技能**：
+
 - `database-lookup` - 查询AlphaFold DB、PDB、UniProt、ZINC
 - `biopython` - 结构分析
 - `esm` - 蛋白质语言模型和嵌入
@@ -630,6 +636,7 @@ Expected Output:
 **目标**：在合成前评估候选药物的潜在毒性和安全性。
 
 **使用的技能**：
+
 - `database-lookup` - 查询ChEMBL、PubChem、DrugBank、FDA、HMDB
 - `rdkit` - 分子描述符
 - `medchem` - 毒物检测
@@ -758,6 +765,7 @@ Expected Output:
 **目标**：分析特定适应症的临床试验情况，为开发策略提供信息。
 
 **使用的技能**：
+
 - `database-lookup` - 查询 ClinicalTrials.gov、FDA、DrugBank、开放目标
 - `paper-lookup` - 搜索 PubMed、OpenAlex 以获取已发布的结果
 - `polars` - 数据操作
@@ -881,6 +889,7 @@ Expected Output:
 **目标**：整合转录组学、蛋白质组学和代谢组学，以确定代谢疾病中失调的途径。
 
 **使用的技能**：
+
 - `database-lookup` - 查询 HMDB、代谢组学工作台、KEGG、Reactome、STRING
 - `pydeseq2` - RNA-seq 分析
 - `pyopenms` - 质谱法
@@ -999,6 +1008,7 @@ Expected Output:
 **目标**：通过计算筛选发现用于锂离子电池的新型固体电解质材料。
 
 **使用的技能**：
+
 - `pymatgen` - 材料分析和特征工程
 - `scikit-learn` - 机器学习
 - `pymoo` - 多目标优化
@@ -1129,6 +1139,7 @@ Expected Output:
 **目标**：开发并验证用于组织病理学图像中自动肿瘤检测的深度学习模型。
 
 **使用的技能**：
+
 - `histolab` - 整张幻灯片图像处理
 - `pathml` - 计算病理学
 - `pytorch-lightning` - 深度学习和图像模型
@@ -1249,6 +1260,7 @@ Expected Output:
 ### 示例 12：自动高通量筛选方案
 
 **目标**：使用液体处理机器人设计并执行自动化化合物筛选工作流程。**使用的技能**：
+
 - `pylabrobot` - 实验室自动化
 - `opentrons-integration` - Opentrons协议
 - `benchling-integration` - 样品追踪
@@ -1392,6 +1404,7 @@ Expected Output:
 **目标**：确定与作物品种的耐旱性和产量相关的遗传标记。
 
 **使用的技能**：
+
 - `database-lookup` - 查询GWAS目录、Ensembl、NCBI基因
 - `biopython` - 序列分析
 - `pysam` - VCF加工
@@ -1526,6 +1539,7 @@ Expected Output:
 **目标**：分析静息态功能磁共振成像数据，以确定疾病中改变的大脑连接模式。
 
 **使用的技能**：
+
 - `neurokit2` - 神经生理信号处理
 - `neuropixels-analysis` - 神经数据分析
 - `scikit-learn` - 分类和聚类
@@ -1664,6 +1678,7 @@ Expected Output:
 ### 示例 15：环境样本的宏基因组分析
 
 **目标**：表征环境 DNA 样本中的微生物群落组成和功能潜力。**使用的技能**：
+
 - `database-lookup` - 查询ENA、GEO、UniProt、KEGG
 - `biopython` - 序列处理
 - `pysam` - BAM 文件处理
@@ -1809,6 +1824,7 @@ Expected Output:
 **目标**：跟踪抗菌药物耐药性趋势并根据基因组数据预测耐药表型。
 
 **使用的技能**：
+
 - `database-lookup` - 查询ENA、UniProt、NCBI基因
 - `biopython` - 序列分析
 - `pysam` - 基因组组装分析
@@ -1959,6 +1975,7 @@ Expected Output:
 **目标**：整合基因组学、转录组学、蛋白质组学和临床数据来确定癌症亚型和治疗策略。
 
 **使用的技能**：
+
 - `database-lookup` - 查询 Ensembl、COSMIC、STRING、Reactome、开放目标
 - `pydeseq2` - RNA-seq DE 分析
 - `pysam` - 变体调用
@@ -2136,6 +2153,7 @@ Expected Output:
 ### 示例 18：粒子物理探测器数据分析
 
 **目标**：分析粒子探测器的实验数据以识别信号事件并测量物理常数。**使用的技能**：
+
 - `astropy` - 单位和常数
 - `sympy` - 符号数学
 - `statistical-analysis` - 统计分析
@@ -2287,6 +2305,7 @@ Expected Output:
 **目标**：设计和优化连续化学反应器，以实现最大产量和效率，同时满足安全和经济限制。
 
 **使用的技能**：
+
 - `sympy` - 符号方程和反应动力学
 - `statistical-analysis` - 数值分析
 - `pymoo` - 多目标优化
@@ -2493,6 +2512,7 @@ Expected Output:
 **目标**：为出版物和演示文稿生成和完善科学插图、图表和图形摘要。
 
 **使用的技能**：
+
 - `generate-image` - AI图像生成和编辑
 - `matplotlib` - 数据可视化
 - `plotly` - 交互式可视化
@@ -2642,6 +2662,7 @@ Expected Output:
 ### 示例 21：分子基态的变分量子本征求解器
 
 **目标**：使用量子计算计算药物设计应用的分子电子结构和基态能量。**使用的技能**：
+
 - `qiskit` - IBM 量子计算框架
 - `pennylane` - 量子机器学习
 - `cirq` - 谷歌量子电路
@@ -2735,6 +2756,7 @@ Expected Output:
 **目标**：制定一份全面的研究资助提案，其中包括文献综述、具体目标和预算理由。
 
 **使用的技能**：
+
 - `database-lookup` - 查询 ClinicalTrials.gov 以获取初步数据背景
 - `paper-lookup` - 搜索 PubMed、OpenAlex 的文献和引文
 - `research-grants` - 拨款写作模板和指南
@@ -2847,6 +2869,7 @@ Expected Output:
 **目标**：分析高维流式细胞术数据以表征临床样本中的免疫细胞群。
 
 **使用的技能**：
+
 - `flowio` - FCS文件解析
 - `scanpy` - 高维分析
 - `scikit-learn` - 聚类和分类
@@ -2973,11 +2996,13 @@ Expected Output:
 ### 技能覆盖范围摘要
 
 本文档中的示例涵盖以下技能类别：**数据库和数据源：**
+
 - `database-lookup` — 统一访问 78 个数据库，包括 ChEMBL、PubChem、DrugBank、UniProt、NCBI Gene、Ensembl、ClinVar、COSMIC、STRING、KEGG、Reactome、HMDB、PDB、AlphaFold DB、ZINC、GWAS Catalog、GEO、ENA、ClinicalTrials.gov、FDA、Open Targets、ClinPGx、Metabolomics Workbench 和更多
 - `paper-lookup`——统一访问PubMed、PMC、bioRxiv、medRxiv、arXiv、OpenAlex、Crossref、Semantic Scholar、CORE、Unpaywall等10个学术论文数据库
 - `cellxgene-census` — CZ CELLxGENE 单细胞参考数据
 
 **分析包：**
+
 - 化学：`rdkit`、`datamol`、`medchem`、`molfeat`、`deepchem`、`torchdrug`、`pytdc`、`diffdock`、`pyopenms`、 `matchms`、`cobrapy`
 - 基因组学：`biopython`、`pysam`、`pydeseq2`、`scanpy`、`scvi-tools`、`anndata`、`gget`、`geniml`、`deeptools`、 `etetoolkit`、`scikit-bio`
 - 蛋白质：`esm`、`bioservices`
@@ -2996,6 +3021,7 @@ Expected Output:
 - 模拟：`simpy`、`pymoo`
 
 **写作和报告：**
+
 - `scientific-writing`、`scientific-visualization`、`scientific-schematics`、`scientific-slides`
 - `clinical-reports`、`clinical-decision-support`
 - `literature-review`、`hypothesis-generation`、`scientific-critical-thinking`
@@ -3004,13 +3030,15 @@ Expected Output:
 - `citation-management`、`market-research-reports`
 
 **图像和媒体：**
+
 - `generate-image`、`omero-integration`
 
 ### 如何使用这些示例1. **适应您的需求**：针对您的具体研究问题修改参数、数据集和目标
-2. **创造性地组合技能**：混合搭配不同类别的技能
-3. **遵循结构**：每个示例都提供了清晰的分步工作流程
-4. **生成全面的输出**：以出版质量的数据和专业报告为目标
-5. **引用您的来源**：始终验证数据并提供正确的引用
+
+1. **创造性地组合技能**：混合搭配不同类别的技能
+2. **遵循结构**：每个示例都提供了清晰的分步工作流程
+3. **生成全面的输出**：以出版质量的数据和专业报告为目标
+4. **引用您的来源**：始终验证数据并提供正确的引用
 
 ### 附加说明
 
