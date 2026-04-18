@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
 """Scan all skills for security issues and produce SECURITY.md."""
 
+import argparse
 import os
 import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    def load_dotenv() -> None:
+        return None
+
 from skill_scanner import SkillScanner
 from skill_scanner.core.analyzers import (
     BehavioralAnalyzer,
@@ -19,8 +25,67 @@ from skill_scanner.core.scan_policy import ScanPolicy
 
 load_dotenv()
 
-SKILLS_DIR = "scientific-skills"
-OUTPUT_FILE = "SECURITY.md"
+DEFAULT_SKILLS_DIR = "scientific-skills"
+DEFAULT_OUTPUT_FILE = "SECURITY.md"
+
+
+TRANSLATIONS = {
+    "en": {
+        "report_title": "# Security Scan Report",
+        "generated": "**Generated:** {value}  ",
+        "skills_scanned": "**Skills scanned:** {value}  ",
+        "total_findings": "**Total findings:** {value}  ",
+        "headline": "**Critical:** {critical} | **High:** {high} | **Safe skills:** {safe}/{total}",
+        "summary": "## Summary",
+        "table_skill": "Skill",
+        "table_severity": "Severity",
+        "table_findings": "Findings",
+        "table_safe": "Safe",
+        "table_duration": "Duration",
+        "detailed_findings": "## Detailed Findings",
+        "file": "File",
+        "remediation": "Remediation",
+        "no_findings": "No findings to report — all skills passed.",
+    },
+    "zh": {
+        "report_title": "# 安全扫描报告",
+        "generated": "**生成时间：** {value}  ",
+        "skills_scanned": "**扫描技能数：** {value}  ",
+        "total_findings": "**发现总数：** {value}  ",
+        "headline": "**严重：** {critical} | **高危：** {high} | **安全技能：** {safe}/{total}",
+        "summary": "## 汇总",
+        "table_skill": "技能",
+        "table_severity": "严重级别",
+        "table_findings": "发现数",
+        "table_safe": "安全",
+        "table_duration": "耗时",
+        "detailed_findings": "## 详细发现",
+        "file": "文件",
+        "remediation": "修复建议",
+        "no_findings": "没有需要报告的发现，所有技能均通过扫描。",
+    },
+}
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--skills-dir",
+        default=DEFAULT_SKILLS_DIR,
+        help="Directory containing skills to scan",
+    )
+    parser.add_argument(
+        "--output-file",
+        default=DEFAULT_OUTPUT_FILE,
+        help="Markdown report path to write",
+    )
+    parser.add_argument(
+        "--lang",
+        choices=sorted(TRANSLATIONS.keys()),
+        default="en",
+        help="Report language",
+    )
+    return parser.parse_args()
 
 
 def build_scanner() -> SkillScanner:
@@ -32,12 +97,17 @@ def build_scanner() -> SkillScanner:
     llm_model = os.getenv("SKILL_SCANNER_LLM_MODEL", "anthropic/claude-sonnet-4-6")
     llm_key = os.getenv("SKILL_SCANNER_LLM_API_KEY")
 
+    analyzers = [
+        BehavioralAnalyzer(),
+        TriggerAnalyzer(),
+    ]
+    if llm_key:
+        analyzers.append(LLMAnalyzer(model=llm_model, api_key=llm_key, policy=policy))
+    else:
+        print("SKILL_SCANNER_LLM_API_KEY not set; running without LLM analysis.")
+
     scanner = SkillScanner(
-        analyzers=[
-            BehavioralAnalyzer(),
-            TriggerAnalyzer(),
-            LLMAnalyzer(model=llm_model, api_key=llm_key, policy=policy),
-        ],
+        analyzers=analyzers,
         policy=policy,
     )
     return scanner
@@ -55,22 +125,32 @@ def severity_badge(sev: str) -> str:
     return f"{icons.get(sev, '⚫')} {sev}"
 
 
-def generate_report(report) -> str:
+def generate_report(report, lang: str = "en") -> str:
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     lines: list[str] = []
+    t = TRANSLATIONS[lang]
 
-    lines.append("# Security Scan Report")
+    lines.append(t["report_title"])
     lines.append("")
-    lines.append(f"**Generated:** {now}  ")
-    lines.append(f"**Skills scanned:** {report.total_skills_scanned}  ")
-    lines.append(f"**Total findings:** {report.total_findings}  ")
-    lines.append(f"**Critical:** {report.critical_count} | **High:** {report.high_count} | **Safe skills:** {report.safe_count}/{report.total_skills_scanned}")
+    lines.append(t["generated"].format(value=now))
+    lines.append(t["skills_scanned"].format(value=report.total_skills_scanned))
+    lines.append(t["total_findings"].format(value=report.total_findings))
+    lines.append(
+        t["headline"].format(
+            critical=report.critical_count,
+            high=report.high_count,
+            safe=report.safe_count,
+            total=report.total_skills_scanned,
+        )
+    )
     lines.append("")
 
     # Summary table
-    lines.append("## Summary")
+    lines.append(t["summary"])
     lines.append("")
-    lines.append("| Skill | Severity | Findings | Safe | Duration |")
+    lines.append(
+        f"| {t['table_skill']} | {t['table_severity']} | {t['table_findings']} | {t['table_safe']} | {t['table_duration']} |"
+    )
     lines.append("|-------|----------|----------|------|----------|")
 
     sorted_results = sorted(
@@ -91,7 +171,7 @@ def generate_report(report) -> str:
     # Per-skill details (only for skills with findings)
     flagged = [r for r in sorted_results if r.findings]
     if flagged:
-        lines.append("## Detailed Findings")
+        lines.append(t["detailed_findings"])
         lines.append("")
 
         for result in flagged:
@@ -108,15 +188,15 @@ def generate_report(report) -> str:
                     loc = finding.file_path
                     if finding.line_number:
                         loc += f":{finding.line_number}"
-                    lines.append(f"  > File: `{loc}`")
+                    lines.append(f"  > {t['file']}: `{loc}`")
                 if finding.remediation:
-                    lines.append(f"  > **Remediation:** {finding.remediation}")
+                    lines.append(f"  > **{t['remediation']}：** {finding.remediation}")
                 lines.append("")
 
     else:
-        lines.append("## Detailed Findings")
+        lines.append(t["detailed_findings"])
         lines.append("")
-        lines.append("No findings to report — all skills passed.")
+        lines.append(t["no_findings"])
         lines.append("")
 
     return "\n".join(lines)
@@ -203,21 +283,22 @@ def scan_with_progress(scanner: SkillScanner, skills_dir: str) -> Report:
 
 
 def main():
-    print("Building scanner (LLM + behavioral + trigger + balanced policy)...")
+    args = parse_args()
+    print("Building scanner (behavioral + trigger + optional LLM + balanced policy)...")
     scanner = build_scanner()
     print(f"Analyzers: {scanner.list_analyzers()}\n")
 
-    print(f"Scanning {SKILLS_DIR}/...")
-    report = scan_with_progress(scanner, SKILLS_DIR)
+    print(f"Scanning {args.skills_dir}/...")
+    report = scan_with_progress(scanner, args.skills_dir)
 
     print(f"\nResults: {report.total_skills_scanned} skills, {report.total_findings} findings")
     print(f"  Critical: {report.critical_count}  High: {report.high_count}  Safe: {report.safe_count}")
 
-    md = generate_report(report)
-    with open(OUTPUT_FILE, "w") as f:
+    md = generate_report(report, lang=args.lang)
+    with open(args.output_file, "w") as f:
         f.write(md)
 
-    print(f"\nReport written to {OUTPUT_FILE}")
+    print(f"\nReport written to {args.output_file}")
 
 
 if __name__ == "__main__":
